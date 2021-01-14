@@ -7,17 +7,40 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastructure.Core.Context;
 using Microsoft.AspNetCore;
+using Utilities.Core.Implementation.Database;
 
 namespace DistributedServices.Core
 {
     public class Program
     {
-        private static void Main(string[] args)
-        {
-            var configuration = GetConfiguration();
+        public static readonly string Namespace = typeof(Program).Namespace;
+        public static readonly string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
 
-            BuildWebHost(configuration, args).RunAsync().Wait();
+        private static int Main(string[] args)
+        {
+            try
+            {
+                var configuration = GetConfiguration();
+                Console.WriteLine("Configuring web host ({0})...", AppName);
+
+                var host = BuildWebHost(configuration, args);
+
+                Console.WriteLine("Applying migrations ({0})...", AppName);
+                host.MigrateDbContext<CoreContext>((context, services) => { });
+
+                Console.WriteLine("Starting web host ({0})...", AppName);
+                host.RunAsync().Wait();
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Program terminated unexpectedly (ApplicationContext)! {AppName}");
+                Console.WriteLine(ex.Message);
+                return 1;
+            }
         }
 
         private static IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>

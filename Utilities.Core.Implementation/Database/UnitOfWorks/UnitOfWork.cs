@@ -4,9 +4,9 @@ using System.Data;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CommonServiceLocator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Practices.ServiceLocation;
 using Utilities.Core.Implementation.Database.Repositories;
 using Utilities.Core.Interfaces.Database.Repositories;
 using Utilities.Core.Interfaces.Database.UnitOfWorks;
@@ -18,6 +18,7 @@ namespace Utilities.Core.Implementation.Database.UnitOfWorks
         #region Private Fields
         private bool _disposed;
         private DbContext _context;
+        private IDbContextTransaction _transaction;
         private Dictionary<string, dynamic> _repositories;
         
         #endregion Private Fields
