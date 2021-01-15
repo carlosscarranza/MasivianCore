@@ -6,17 +6,17 @@ namespace Infrastructure.Core
 {
     public static class AppConfigurations
     {
-        private static readonly ConcurrentDictionary<string, IConfigurationRoot> _configurationCache;
+        private static readonly ConcurrentDictionary<string, IConfigurationRoot> ConfigurationCache;
 
         static AppConfigurations()
         {
-            _configurationCache = new ConcurrentDictionary<string, IConfigurationRoot>();
+            ConfigurationCache = new ConcurrentDictionary<string, IConfigurationRoot>();
         }
 
         public static IConfigurationRoot Get(string path, string environmentName = null)
         {
             var cacheKey = path + "#" + environmentName;
-            return _configurationCache.GetOrAdd(
+            return ConfigurationCache.GetOrAdd(
                 cacheKey,
                 _ => BuildConfiguration(path, environmentName)
             );

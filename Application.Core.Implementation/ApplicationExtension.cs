@@ -11,6 +11,7 @@ namespace Application.Core.Implementation
         public static void UseApplication(this IServiceCollection services)
         {
             services.AddTransient<IRouletteApplication, RouletteApplication>();
+            services.AddTransient<IBetApplication, BetApplication>();
         }
     }
 }

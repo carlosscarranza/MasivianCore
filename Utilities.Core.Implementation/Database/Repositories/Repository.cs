@@ -117,8 +117,6 @@ namespace Utilities.Core.Implementation.Database.Repositories
 
         public virtual IQueryable<TEntity> GetAll(bool withoutDefaultFilters = false)
         {
-            IQueryable<TEntity> query = _dbSet;
-
             var query2 = ApplyDefaultFilters(_dbSet);
             return query2;
         }

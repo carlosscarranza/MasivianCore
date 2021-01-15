@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using Application.Core.Implementation;
+using Application.Core.Implementation.Validations;
+using FluentValidation.AspNetCore;
 using Infrastructure.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -41,7 +43,10 @@ namespace DistributedServices.Core
                 .AddNewtonsoftJson(options => {
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.Converters.Add(new StringEnumConverter());
-                });
+                })
+                .AddFluentValidation(fv => fv
+                    .RegisterValidatorsFromAssemblyContaining<CreateBetValidation>()
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

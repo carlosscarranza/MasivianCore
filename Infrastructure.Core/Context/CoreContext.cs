@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Domain.Core;
+using Domain.Core.Classes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Utilities.Core.Implementation.Database;

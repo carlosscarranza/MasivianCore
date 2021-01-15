@@ -18,16 +18,17 @@ namespace Utilities.Core.Implementation.Database.UnitOfWorks
         #region Private Fields
         private bool _disposed;
         private DbContext _context;
-        private IDbContextTransaction _transaction;
+        private readonly IDbContextTransaction _transaction;
         private Dictionary<string, dynamic> _repositories;
         
         #endregion Private Fields
 
         #region Constuctor/Dispose
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(DbContext context, IDbContextTransaction transaction)
         {
             _context = context;
+            _transaction = transaction;
             _repositories = new Dictionary<string, dynamic>();
         }
 

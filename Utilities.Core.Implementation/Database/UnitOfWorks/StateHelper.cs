@@ -9,26 +9,15 @@ namespace Utilities.Core.Implementation.Database.UnitOfWorks
     {
         public static EntityState ConvertState(EntityState state)
         {
-            switch (state)
+            return state switch
             {
-                case EntityState.Detached:
-                    return EntityState.Unchanged;
-
-                case EntityState.Unchanged:
-                    return EntityState.Unchanged;
-
-                case EntityState.Added:
-                    return EntityState.Added;
-
-                case EntityState.Deleted:
-                    return EntityState.Deleted;
-
-                case EntityState.Modified:
-                    return EntityState.Modified;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state));
-            }
+                EntityState.Detached => EntityState.Unchanged,
+                EntityState.Unchanged => EntityState.Unchanged,
+                EntityState.Added => EntityState.Added,
+                EntityState.Deleted => EntityState.Deleted,
+                EntityState.Modified => EntityState.Modified,
+                _ => throw new ArgumentOutOfRangeException(nameof(state))
+            };
         }
     }
 }
