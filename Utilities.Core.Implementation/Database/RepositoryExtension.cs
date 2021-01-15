@@ -14,7 +14,6 @@ namespace Utilities.Core.Implementation.Database
         public static void UseRepository(this IServiceCollection services, Type dbContextType)
         {
             services.AddScoped(typeof(DbContext), dbContextType);
-            services.AddScoped(typeof(IRepositoryDbContext), dbContextType);
             services.AddScoped(typeof(IUnitOfWorkAsync), typeof(UnitOfWork));
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(Repository<>));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

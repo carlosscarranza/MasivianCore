@@ -6,7 +6,7 @@ using Utilities.Core.Implementation.Database;
 
 namespace Infrastructure.Core.Context
 {
-    public class CoreContext : RepositoryDbContext
+    public class CoreContext : DbContext
     {
         public CoreContext(DbContextOptions options) : base(options)
         {

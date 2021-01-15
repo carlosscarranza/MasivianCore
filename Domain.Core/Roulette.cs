@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Utilities.Core.Implementation.Models;
 
@@ -12,9 +13,6 @@ namespace Domain.Core
         public string Result { get; set; }
         public DateTime DateOpening { get; set; }
         public DateTime DateClosing { get; set; }
-        public Guid BetId { get; set; }
-
-        [ForeignKey("BetId")]
-        public Bet Bet { get; set; }
+        public ICollection<Bet> Bets { get; set; }
     }
 }

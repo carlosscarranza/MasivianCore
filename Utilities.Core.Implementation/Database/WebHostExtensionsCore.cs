@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Polly;
 
 namespace Utilities.Core.Implementation.Database
 {
-    public static class WebHostExtensions
+    public static class WebHostExtensionsCore
     {
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider>? seeder = null) where TContext : DbContext
+        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
         {
             using var scope = webHost.Services.CreateScope();
             var services = scope.ServiceProvider;
@@ -24,7 +20,7 @@ namespace Utilities.Core.Implementation.Database
                 logger.LogInformation("Migrating database associated with context {DbContextName}", typeof(TContext).Name);
 
                 InvokeSeeder(seeder, context, services);
-
+                
                 logger.LogInformation("Migrated database associated with context {DbContextName}", typeof(TContext).Name);
             }
             catch (Exception ex)

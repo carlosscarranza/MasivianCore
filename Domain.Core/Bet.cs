@@ -11,8 +11,14 @@ namespace Domain.Core
         public double Amount { get; set; }
         public int NumberBet { get; set; }
         public string ColourBet { get; set; }
+        public Guid RouletteId { get; set; }
         public Guid UserId { get; set; }
-        public ICollection<Roulette> Roulettes { get; set; }
-        public ICollection<User> Users { get; set; }
+
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+
+        [ForeignKey("RouletteId")]
+        public Roulette Roulette { get; set; }
+        
     }
 }

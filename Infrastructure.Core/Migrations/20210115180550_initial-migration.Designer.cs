@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Core.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20210115163815_initial-migration")]
+    [Migration("20210115180550_initial-migration")]
     partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,10 +57,17 @@ namespace Infrastructure.Core.Migrations
                     b.Property<int>("NumberBet")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("RouletteId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RouletteId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bet");
                 });
@@ -69,9 +76,6 @@ namespace Infrastructure.Core.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BetId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationTime")
@@ -112,8 +116,6 @@ namespace Infrastructure.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BetId");
-
                     b.ToTable("Roulette");
                 });
 
@@ -121,9 +123,6 @@ namespace Infrastructure.Core.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BetId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationTime")
@@ -158,25 +157,20 @@ namespace Infrastructure.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BetId");
-
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Domain.Core.Roulette", b =>
+            modelBuilder.Entity("Domain.Core.Bet", b =>
                 {
-                    b.HasOne("Domain.Core.Bet", "Bet")
-                        .WithMany("Roulettes")
-                        .HasForeignKey("BetId")
+                    b.HasOne("Domain.Core.Roulette", "Roulette")
+                        .WithMany("Bets")
+                        .HasForeignKey("RouletteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Domain.Core.User", b =>
-                {
-                    b.HasOne("Domain.Core.Bet", "Bet")
-                        .WithMany("Users")
-                        .HasForeignKey("BetId")
+                    b.HasOne("Domain.Core.User", "User")
+                        .WithMany("Bets")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

@@ -4,18 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+using Application.Core.Implementation;
 using Infrastructure.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Converters;
 using Utilities.Core.Implementation.Database;
 using Utilities.Core.Implementation.Middleware;
-using WebHostExtensions = Utilities.Core.Implementation.Database.WebHostExtensions;
 
 namespace DistributedServices.Core
 {
@@ -33,19 +28,14 @@ namespace DistributedServices.Core
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Environment.GetEnvironmentVariable("SQL_SERVER_CONNECTION");
-            var migrationAssembly = typeof(WebHostExtensions).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<CoreContext>(
-                options => options.UseSqlServer(connectionString,
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.MigrationsAssembly(migrationAssembly);
-                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
-                            errorNumbersToAdd: null);
-                    }),
+                options => options.UseSqlServer(connectionString ?? throw new InvalidOperationException()),
                 ServiceLifetime.Scoped);
 
             services.UseRepository(typeof(CoreContext));
+
+            services.UseApplication();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => {
