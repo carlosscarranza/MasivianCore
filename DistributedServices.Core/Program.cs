@@ -23,8 +23,8 @@ namespace DistributedServices.Core
             try
             {
                 var configuration = GetConfiguration();
-                Console.WriteLine("Configuring web host ({0})...", AppName);
 
+                Console.WriteLine("Configuring web host ({0})...", AppName);
                 var host = BuildWebHost(configuration, args);
 
                 Console.WriteLine("Applying migrations ({0})...", AppName);
