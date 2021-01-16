@@ -15,16 +15,14 @@ namespace Application.Core.Implementation
     {
         private readonly IRepositoryAsync<Roulette> _rouletteRepositoryAsync;
         private readonly IRepositoryAsync<Bet> _betRepositoryAsync;
-        private readonly IRepositoryAsync<User> _useRepositoryAsync;
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
 
         public RouletteApplication(IRepositoryAsync<Roulette> rouletteRepositoryAsync, 
-            IUnitOfWorkAsync unitOfWorkAsync, IRepositoryAsync<Bet> betRepositoryAsync, IRepositoryAsync<User> useRepositoryAsync)
+            IUnitOfWorkAsync unitOfWorkAsync, IRepositoryAsync<Bet> betRepositoryAsync)
         {
             _rouletteRepositoryAsync = rouletteRepositoryAsync;
             _unitOfWorkAsync = unitOfWorkAsync;
             _betRepositoryAsync = betRepositoryAsync;
-            _useRepositoryAsync = useRepositoryAsync;
         }
 
         public async Task<Guid> CreateRoulette(Roulette input)
