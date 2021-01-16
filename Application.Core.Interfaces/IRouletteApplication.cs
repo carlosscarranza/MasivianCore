@@ -10,7 +10,9 @@ namespace Application.Core.Interfaces
     {
         Task<Guid> CreateRoulette(Roulette input);
         
-        Task<bool> OpenRoulette(Roulette input);
+        Task<bool> OpenRoulette(Guid input);
+
+        Task<string> CloseRoulette(Guid input);
 
         Task<List<Roulette>> GetRoulettes();
     }
