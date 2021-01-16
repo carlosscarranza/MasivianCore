@@ -98,9 +98,9 @@ namespace Utilities.Core.Implementation.Database.Repositories
             throw new NotImplementedException();
         }
 
-        public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            _context.RemoveRange(_dbSet.Where(predicate));
+            throw new NotImplementedException();
         }
 
         public virtual void Delete(object id)

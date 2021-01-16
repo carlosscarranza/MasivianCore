@@ -37,7 +37,7 @@ namespace DistributedServices.Core.Controllers
         }
 
         [HttpPut("v1/close-roulette")]
-        public Task<bool> CloseRoulette(Guid input)
+        public Task<string> CloseRoulette(Guid input)
         {
             return _rouletteApplication.CloseRoulette(input);
         }
