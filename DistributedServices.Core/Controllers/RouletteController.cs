@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Application.Core.Interfaces;
 using Domain.Core.Classes;
 
 namespace DistributedServices.Core.Controllers
 {
-    [Route("api/[controller]/")]
+    [Route("api/")]
     [ApiController]
     public class RouletteController : ControllerBase
     {
@@ -31,13 +32,13 @@ namespace DistributedServices.Core.Controllers
         }
 
         [HttpPut("v1/open-roulette")]
-        public Task<bool> OpenRoulette(Guid input)
+        public Task<bool> OpenRoulette([FromForm][Required] Guid input)
         {
             return _rouletteApplication.OpenRoulette(input);
         }
 
         [HttpPut("v1/close-roulette")]
-        public Task<string> CloseRoulette(Guid input)
+        public Task<string> CloseRoulette([FromForm][Required] Guid input)
         {
             return _rouletteApplication.CloseRoulette(input);
         }

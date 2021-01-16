@@ -7,7 +7,7 @@ using Domain.Core.Classes;
 
 namespace DistributedServices.Core.Controllers
 {
-    [Route("api/[controller]/")]
+    [Route("api/")]
     [ApiController]
     public class BetController : ControllerBase
     {
